@@ -1,0 +1,142 @@
+<!--
+  deleted the <script>, changed the content, followed along w/ the video
+  
+  Also: got an idea to make a 100-projects project for just clicking
+  boxes all over a page.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Arrow Functions</title>
+</head>
+<body>
+
+  <style>
+    .wrap {
+      min-height: 100vh;
+      display:flex;
+      justify-content: center;
+      align-items: center;
+      font-family: sans-serif;
+      font-weight: 100;
+      color:white;
+    }
+
+    .box {
+      background:black url(https://unsplash.it/1500/1500?image=1073&blur=0.5) center fixed no-repeat;
+      width:50px;
+      height:50px;
+      padding:50px;
+      transition: width 0.2s, height 0.6s;
+      position: relative;
+    }
+
+    .box.opening {
+      width:500px;
+      height:500px;
+    }
+
+    .box h2 {
+      position: absolute;
+      width:100%;
+      font-size: 100px;
+      transform:translateX(-200%);
+      transition: all 0.5s;
+      top:0;
+    }
+
+    .box p {
+      position: absolute;
+      width:100%;
+      transform:translateX(200%);
+      transition: all 0.5s;
+      bottom:0;
+    }
+
+    .box.open > * {
+      transform:translateX(0%);
+    }
+  </style>
+
+  <div class="wrap">
+    <div class="box">
+      <h2>Hi!</h2>
+      <p class="social">@dotsara</p>
+    </div>
+  </div>
+
+<script>
+  // const because we're not interested in the reference to this 
+  // particular box ever changing.
+  const box = document.querySelector('.box');
+  //console.log(box);
+  box.addEventListener('click', function() {
+    // here we're going to do a regular function, but… why?
+    // let's start by console logging `this`
+    // console.log(this);
+
+    // look at the thing that got called, addEventListener, then look
+    // to the left of it… it's the box! Makes sense. 
+    
+    // but now, if you swap it out for an arrow function, watch what 
+    // happens… clicking gets you… `Window`… wt…f. Why why
+    // Because when you use an arrow function, `this` isn't re-bound, it's
+    // inherited from the parent scope which here is… the `Window`!
+    // so… be careful about using arrow functions, they're not just for
+    // typing less.
+
+    // this.classList.toggle('opening'); // hooray!
+    
+    // next… you might think, so add a setTimeout and toggle the next
+    // class, `open`
+
+    // setTimeout(function() {
+    //   console.log(this.classList); // still undefined, though…
+    //   this.classList.toggle('open');
+    // }, 500);
+    //…except that gets you: Cannot read property `toggle`
+    // of undefined
+    // and you get that because when you enter setTimeout, you've entered
+    // a new function and this function hasn't been bound to anything, 
+    // so it's going to be equal to the window. 
+    // one of the ways people accommodate this behavior is with things like:
+    // var self = this; and so on.
+    
+    // fortunately we don't have to do this anymore! we "just" need to make
+    // it an arrow function because it won't change `this` it'll inherit and 
+    // in this case, that means it'll inherit `box`!
+
+    // setTimeout(() => {
+    //   console.log(this);
+    //   this.classList.toggle('open');
+    // }, 500);
+    
+    // hooray!
+    
+    // but now if you notice, when you click it a second time (to close it)
+    // we actually want the toggles to go in the opoosite direction, it's
+    // rather strange going in the same order, so, we're going to change it up
+
+    let first = 'opening';
+    let second = 'open';
+    
+    if(this.classList.contains(first)) {
+      // i.e. it's already in an open state--then we want to switch them
+      [first,second] = [second, first]; // this previews the upcoming
+      // destructuring lesson BUT THAT IS KIND OF RAD WHOA
+    } 
+    this.classList.toggle(first);
+    setTimeout(() => {
+      console.log(this);
+      this.classList.toggle(second);
+    }, 500);
+    
+    // the big takeaway for this lesson (Arrow functions and `this`) is that
+    // you can use arrow functions inside regular functions and they will 
+    // inherit the earth--I mean the meaning of `this`
+  });
+</script>
+
+</body>
+</html>
