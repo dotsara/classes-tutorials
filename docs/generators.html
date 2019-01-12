@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Introducing Generators</title>
+</head>
+<body>
+
+<section>
+  <h1>Introducing Generator functions</h1>
+  
+  <ul>
+    <li>New <code>keyword</code>: <code>yield</code>
+    <ol>
+      <li><code>people.next()</code></li>
+    </ol>
+    </li>
+  </ul>
+</section>
+  
+<section>
+  <h1>Generators continued</h1>
+    <ul>
+      <li>Using Generators to control ajax flow</li>
+    </ul>
+</section>
+<script>
+
+  // typically when you run a fuction in javascript, it runs from top to bottom
+  // and then it's done. But with generator functions you can start, and stop, 
+  // etc.
+  
+  function* listPeople() {
+    // yield keyword is kind of like a "return for now…"
+    // so it'll return that 1 response until the function is called again
+    yield 'Moana';
+    yield 'Merida';
+    yield 'Mulan';
+    // in this case it would have to be called 3x to get all of them
+  };
+  
+  // to *use* a generator function invoke it and store it in variable
+  const people = listPeople();
+  // note to self: Firefox's console doesn't show the [[GeneratorStatus]], etc.
+  // so… switching to Chrome for the duration.
+  
+  // another example: iterating through an array.
+  const authors = [
+    { first: 'J.K.', last: 'Rowling', year: 1965},
+    { first: 'Charlotte', last: 'Brontë', year: 1816},
+    { first: 'Chimamanda', last: 'Adiche', year: 1977},
+    { first: 'G. Willow', last: 'Wilson', year: 1982},
+    { first: 'Deborah', last: 'Harkness', year: 1965},
+    { first: 'Erin', last: 'Morgenstern', year: 1978},
+    { first: 'Maya', last: 'Angelou', year: 1928}
+  ];
+  
+  function* loop(array) {
+    console.log(authors); // 
+    for (const author of authors) {
+      yield author;
+    };
+  };
+  
+  const authorGen = loop(authors);
+  
+  // moving on to using Generators to control flow of ajax stuff
+  
+  function ajax(url) {
+    fetch(url).then(data => data.json()).then(data => dataGen.next(data));
+    // fetch it, when the data comes back to use, we'll call next
+    // whatever we pass from next will go back to the generator and be stored
+    // in the initial const
+  }
+
+  // we're pretending the following calls rely on each other for the sake
+  // of the example
+  function* steps() {
+    console.log(`fetching beers`);
+    const beers = yield ajax('http://api.react.beer/v2/search?q=hops&type=beer');
+    console.log(beers);
+    
+    console.log(`fetching dot`);
+    const dot = yield ajax('https://api.github.com/users/dotsara');
+    console.log(dot);
+    
+    console.log(`fetching nina`);
+    const nina = yield ajax('https://api.discogs.com/artists/10584');
+    console.log(nina);
+  };
+  
+  const dataGen = steps(); // on page load, we'll set up a brand new thing
+  dataGen.next(); // kick it off 
+</script>
+</body>
+</html>
