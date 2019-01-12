@@ -1,0 +1,90 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Prototypal inheritance review</title>
+</head>
+<body>
+
+  <h1>Prototypal Inheritance Review</h1>
+  
+  <ul>
+    <li><code>Dog</code> class.</li>
+  </ul>
+
+<script>
+
+// prototypal inheritance is when you create a new thing off the 
+// OG thing (i.e. an Array): every single instance inherits the available
+// methods. 
+// So your new Array will have all the methods arrays get (join, pop, etc.)
+// automagically.
+
+  // capital "D" because this is a constructor function
+  // function Dog(name, breed) {
+  //   // these are specific to the instance
+  //   this.name = name; 
+  //   this.breed = breed;
+  // }
+  
+  // Dog.prototype.bark <-- adding a new method to the prototype Dog,
+  // which will be available to all instances of the Dog class.
+  
+  // these are on the prototype, not the instance
+  // Dog.prototype.bark = function() {
+  //   console.log(`Bark Bark! My name is ${this.name}`);
+  // }
+  // const snickers = new Dog('Snickers', 'King Charles');
+  // const sunny = new Dog('Sunny', 'Golden Doodle');
+  
+  // you can also add / override previously added methods and previously
+  // created instances will still get those methods. 
+  // Dog.prototype.bark = function() {
+  //   console.log(`Bark Bark 🇨🇦! My name is ${this.name} and I'm a ${this.breed}`);
+  // }
+
+  // now let's turn Dog.prototype and snickers & sunny into ES6 classes. 
+  
+  // class block
+  class Dog {
+    // the only method that is absolutely required is the constructor
+    // which is what happens when new instances are created
+    constructor(name, breed) {
+      this.name = name; 
+      this.breed = breed;
+    }
+    
+    // now for the methods… 
+    bark() {
+      console.log(`Bark Bark! My name is ${this.name}`);
+    }
+    
+    cuddle() {
+      console.log(`I love you, caretaker!`);
+    }
+    
+    // and now for static methods (like Array.of() which is only available on Array, not instances of arrays)
+    
+    static info() {
+      console.log('A dog is better than a cat by 10 times.');
+    }
+    
+    // can also use getters and setters
+    // not a method, but a property that's kind of computed
+    get description() {
+      return `${this.name} is a ${this.breed} type of dog.`;
+    }
+    
+    set nicknames(value) {
+      this.nick = value.trim();
+    } // should probably include an accompanying getter!
+    
+    get nicknames() {
+      return this.nick;
+    }
+  }
+  
+  const snickers = new Dog('Snickers', 'King Charles');
+  const sunny = new Dog('Sunny', 'Golden Doodle');
+</script>
+</body>
+</html>
