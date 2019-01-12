@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Extending Classes</title>
+</head>
+<body>
+
+<section>
+  <h1>Extending classes</h1>
+  
+  <ol>
+    <li>
+      <p><code>Animal</code> class</p>
+      <p>Available animals:</p>
+      <ol>
+        <li><code>rhino</code></li>
+        <li><code>snickers</code> - a <code>Dog</code> which extends <code>Animal</code></li>
+      </ol>
+    </li>
+  </ol>
+</section>
+<section>
+  <h1>Extending Arrays with Classes for Custom Collections</h1>
+  
+  <ol>
+    <li><code>MovieCollection</code> which extends <code>Array</code></li>
+  </ol>
+</section>
+<script>
+
+  class Animal {
+    constructor(name) {
+      this.name = name;
+      this.thirst = 100;
+      this.belly = [];
+    }
+    
+    drink() {
+      this.thirst = -10;
+      return this.thirst;
+    }
+    
+    eat(food) {
+      this.belly.push(food);
+      return this.belly;
+    }
+  }
+  
+  class Dog extends Animal {
+    constructor(name, breed) {
+      super(name); // this creates the Animal _first_, then can get on with creating a Dog
+      this.breed = breed;
+    }
+  }
+  const rhino = new Animal('Rhiney');
+  const snickers = new Dog('Snickers', 'King Charles');
+  
+  // you can also extend built-ins. not nec. monkeying around with the Array, though. 
+  
+  class MovieCollection extends Array {
+    constructor(name, ...items) { // rest operator
+      super(...items); // spread operator otherwise movies becomes an array of array
+      this.name = name;
+    }
+    
+    add(movie) {
+      this.push(movie); 
+    }
+    
+    topRated(limit = 10){
+      return this.sort((a,b) => (a.stars > b.stars ? -1 : 1)).slice(0, limit); // "this" is the actual MovieCollection
+    }
+  }
+  const movies = new MovieCollection(`Sara's favorite movies`, 
+    { name: `Moana`, stars: 5},
+    { name: `Captain America: Winter Soldier`, stars: 5},
+    { name: `Harry Potter and the Goblet of Fire`, stars: 4.5},
+    { name: `Crazy Rich Asians`, stars: 4}
+  );
+
+  movies.add({ name: 'Contact', stars: 4});
+  
+  // now if you used for (const movie in movies) { console.log(movie) };
+  // you'd get the index of each one plus name because for…in loops over everything, but for…of only goes over the *iterable* items--you get the actual object instead of just the key
+
+</script>
+</body>
+</html>
