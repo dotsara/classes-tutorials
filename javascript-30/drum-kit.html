@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS Drum Kit</title>
+  <link rel="stylesheet" href="drum-kit/style.css">
+</head>
+<body>
+	<div class="keys">
+        <div data-key="65" class="key">
+            <kbd>A</kbd>
+            <span class="sound">clap</span>
+        </div>
+        <div data-key="83" class="key">
+            <kbd>S</kbd>
+            <span class="sound">hi hat</span>
+        </div>
+        <div data-key="68" class="key">
+            <kbd>D</kbd>
+            <span class="sound">kick</span>
+        </div>
+        <div data-key="70" class="key">
+            <kbd>F</kbd>
+            <span class="sound">open hat</span>
+        </div>
+        <div data-key="71" class="key">
+            <kbd>G</kbd>
+            <span class="sound">boom</span>
+        </div>
+        <div data-key="72" class="key">
+            <kbd>H</kbd>
+            <span class="sound">ride</span>
+        </div>
+        <div data-key="74" class="key">
+            <kbd>J</kbd>
+            <span class="sound">snare</span>
+        </div>
+        <div data-key="75" class="key">
+            <kbd>K</kbd>
+            <span class="sound">tom</span>
+        </div>
+        <div data-key="76" class="key">
+            <kbd>L</kbd>
+            <span class="sound">tink</span>
+        </div>
+	</div>
+
+    <audio data-key="65" src="drum-kit/sounds/clap.wav"></audio>
+    <audio data-key="83" src="drum-kit/sounds/hihat.wav"></audio>
+    <audio data-key="68" src="drum-kit/sounds/kick.wav"></audio>
+    <audio data-key="70" src="drum-kit/sounds/openhat.wav"></audio>
+    <audio data-key="71" src="drum-kit/sounds/boom.wav"></audio>
+    <audio data-key="72" src="drum-kit/sounds/ride.wav"></audio>
+    <audio data-key="74" src="drum-kit/sounds/snare.wav"></audio>
+    <audio data-key="75" src="drum-kit/sounds/tom.wav"></audio>
+    <audio data-key="76" src="drum-kit/sounds/tink.wav"></audio>
+
+<script>
+    // window.addEventListener('keydown', function(e) {
+    //   // just getting started to see what this prints out.
+    //   // console.log(e.keyCode);
+    //
+    //   // next, we'll check whether there's an audio element on the page w/ the same keyCode
+    //   const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    //   // console.log(audio);
+    //   // it's the case that sometimes we'll hit a key w/o an audio element, so let's account for that:
+    //   if(!audio) return; // stops the function
+    //
+    //   //audio.play();
+    //   // if you call .play() on something that's already playing, it won't play. So what we want to do
+    //   // is kind of rewind it and start it over to match your hitting the key again
+    //   // therefore…
+    //
+    //   audio.currentTime = 0; // rewind
+    //   audio.play(); // hahah, that's kinda funny.
+    //
+    //   // we still want to highlight the square, so now we'll select the div.key
+    //   const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+    //   // console.log(key);
+    //   // but now how to do the animation! Go see styles.css
+    //   // we'll want to add the `.playing` class
+    //
+    //   key.classList.add('playing'); // we can't _just_ add, though. (:
+    //   // instead of a setTimeout, we'll use a transition end event
+    //   // we'll listen on each key.
+    //
+    //   const keys = document.querySelectorAll('.key');
+    //   // console.log(keys);
+    //   keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+    //
+    //   function removeTransition(e) {
+    //     //console.log(e); // surprise! 6 transitionend events b/c a bunch of stuff changes, borders box shadow, etc.
+    //     if (e.propertyName !== 'transform') return; // skip if it's not a transform
+    //     // console.log(e.propertyName);
+    //
+    //     // console.log(`this is: `, this);
+    //     // reminder / note to self:
+    //     // interpolating `this` inside the template string literals (so: `this is: ${this}`) outputs:
+    //     // this is: [object HTMLDivElement]
+    //     // whereas putting it outside the template string literals, returns the element itself to the log:
+    //     // this is:  [arrow] <div class="key playing"…
+    //     this.classList.remove('playing');
+    //   }
+    // });
+
+      // cleaning up a little bit by moving the anonymous function that's on `keydown` into a named
+      // function and then using that for window.addEventListener('keydown',…)
+
+    // RubyMine points out that keyCode is deprecated--but I don't quite grok how to switch away
+    // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode
+      function playSound(e) {
+        const audio = document.querySelector(`audio[data-key="${e.keyCode}"`);
+        console.log(e);
+        if (!audio) return;
+        audio.currentTime = 0;
+        audio.play();
+
+        const key = document.querySelector(`.key[data-key="${e.keyCode}"`);
+        key.classList.add('playing');
+      }
+
+      function removeTransition(e) {
+       if (e.propertyName !== 'transform') return;
+       this.classList.remove('playing');
+      }
+
+      const keys = document.querySelectorAll('.key');
+      keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+      window.addEventListener('keydown', playSound);
+</script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS + JS Clock</title>
+</head>
+<body>
+
+    <div class="clock">
+        <div class="clock-face">
+            <div class="hand hour-hand"></div>
+            <div class="hand min-hand"></div>
+            <div class="hand second-hand"></div>
+        </div>
+    </div>
+
+<style>
+    html {
+        background: #018DED url(forest.jpg);
+        background-size: cover;
+        font-size: 10px;
+        text-align: center;
+    }
+
+    body {
+        align-items: center;
+        display: flex;
+        flex: 1;
+        font-size: 2rem;
+        min-height: 100vh;
+    }
+
+    .clock {
+        border: 20px solid #ffffff;
+        border-radius: 50%;
+        box-shadow:
+            0 0 0 4px rgba(0,0,0,0.1),
+            inset 0 0 0 3px green,
+            inset 0 0 300px 56px rgba(0,0,0,0.75), /* went for a darker inset */
+            0 0 10px rgba(0,0,0,0.2);
+        height: 30rem;
+        margin: 50px auto;
+        padding: 2rem;
+        position: relative;
+        width: 30rem;
+    }
+
+    .clock-face {
+        height: 100%;
+        position: relative;
+        transform: translateY(-3px); /* accounts for height of the clock hands */
+        width: 100%;
+    }
+
+    .hand {
+        background: yellowgreen;
+        border-radius: 5px;
+        height: 6px;
+        position: absolute;
+        top: 50%;
+        transform-origin: 100%;
+        /* puts the pivot point at the very right edge;
+           default is 50% which is the middle */
+        transform: rotate(90deg);
+        /* so they all start straight up & down */
+        transition: all 0.05s;
+        /* so they don't just JUMP to the next position */
+        transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+        /* copied from the video, Wes cranked the curve waayyyy
+           up in the UI and saved the numbers; this gives the little
+           bounce as the hands tick */
+        width: 50%;
+    }
+</style>
+
+<script>
+
+    // const secondHand = document.querySelector('.second-hand');
+    // const minuteHand = document.querySelector('.min-hand');
+    // const hourHand = document.querySelector('.hour-hand');
+    //
+    // function setDate() {
+    //   // console.log('Hi');
+    //   const now = new Date();
+    //   const seconds = now.getSeconds();
+    //   const secondsDegrees = ((seconds / 60) * 360) + 90;
+    //   /* the +90 is to compensate for transforming the hands
+    //      by 90° in the first place */
+    //   // console.log(`seconds: ${seconds}; secondsDegrees: ${secondsDegrees}`);
+    //
+    //   // const minutes = now.getMinutes();
+    //   // const minutesDegrees = ((minutes / 60) * 360) + 90;
+    //   // const hours = now.getHours();
+    //   // const hoursDegrees = (hours * 360) + 90;
+    //   /* these calculations aren't right; I don't have much experience chopping
+    //      up times / time stamps and doing things with those results, so I'm not
+    //      too upset about it. */
+    //
+    //   /* okay, back to the video and following along w/ Wes */
+    //   const mins = now.getMinutes();
+    //   const minsDegrees = (mins / 60) * 360 + 90;
+    //
+    //   const hour = now.getHours();
+    //   const hourDegrees = ((hour / 12) * 360) + 90;
+    //
+    //   secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+    //   minuteHand.style.transform = `rotate(${minsDegrees}deg)`;
+    //   hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+    //   /* paused video to do minutes & hours on my own, but
+    //      I notice that the second hand keeps starting around
+    //      the :45 second mark, never gets beyond :55 and then
+    //      jumps back again. */
+    //
+    //   /* oohhh, I also just noticed I wrote:
+    //     const now = new(Date); and not const now = new Date(); !
+    //
+    //     Nope, that wasn't it. this is so strange. It's the same in Firefox
+    //     and Chrome. hahahaha.
+    //
+    //     rotate(${seconds}deg) 🤦🏽‍♀️
+    //
+    //     Should be: rotate(${secondsDegrees}deg) !!
+    //
+    //     There's a funny little flash / blip between :59 and :00, though. I'll come back to that.
+    //    */
+    //
+    //   /* so with the funny blip: it's because the degrees don't just
+    //      keep going up and then you get to 360, 0, it kinda…rewinds to get
+    //      to the starting point.
+    //
+    //      an option for dealing with that is checking for the degrees and
+    //      removing the transition from .hand during those target degrees
+    //      then reapplying it after.
+    //    */
+    // }
+    //
+    // setInterval(setDate, 1000);
+
+    // re-writing it so it's concise and also just to practice writing it
+    // workin' on muscle memories.
+
+    const secondHand = document.querySelector('.second-hand');
+    const minuteHand = document.querySelector('.min-hand');
+    const hourHand = document.querySelector('.hour-hand');
+
+    function setDate() {
+        const now = new Date();
+        const seconds = now.getSeconds();
+        const minutes = now.getMinutes();
+        const hours = now.getHours();
+
+        const secondsDegrees = ((seconds / 60) * 360) + 90;
+        const minutesDegrees = ((minutes / 60) * 360) + 90;
+        const hoursDegrees = ((hours / 12) * 360) + 90;
+
+        secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+        minuteHand.style.transform = `rotate(${minutesDegrees}deg)`;
+        hourHand.style.transform = `rotate(${hoursDegrees}deg)`;
+
+        // this could maybe be refactored, the transform bit, but
+        // in the spirit of vanilla JS, I kinda like the plain-ness
+        // it's very clear what's happening here in a way that I'm
+        // not convinced an abstraction would improve wildly.
+    }
+
+    setInterval(setDate, 1000);
+
+</script>
+</body>
+</html>
