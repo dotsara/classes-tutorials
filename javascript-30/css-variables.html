@@ -6,10 +6,98 @@
 </head>
 <body>
 
+<h1>Updating CSS variables with <span class="highlight">javascript</span></h1>
+
+    <div class="controls">
+        <label for="spacing">Spacing:</label>
+        <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+
+        <label for="blur">Blur:</label>
+        <input id="blur" type="range" name="blur" min="10" max="25" value="10" data-sizing="px">
+
+        <label for="base">Base color</label>
+        <input id="base" type="color" name="base" value="#ffc600">
+    </div>
+
+    <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
+
 <style>
+
+    /* the way CSS variables work is you declaring them on an element,
+       we'll be using :root, which is as high as you can go.
+     */
+
+    :root {
+        --base: pink;
+        --spacing: 10px;
+        --blur: 10px;
+    }
+
+    img {
+        background: var(--base);
+        padding: var(--spacing);
+        filter: blur(var(--blur));
+    }
+
+    .highlight {
+        color: var(--base);
+    }
+
+    body {
+        text-align: center;
+    }
+
+    body {
+        background: #999999;
+        color: #e9ba26;
+        font-family: sans-serif;
+        font-weight: 100;
+        font-size: 20px;
+    }
+
+    a {
+        color: #5fb8dd;
+    }
+
+    .controls {
+        margin-bottom: 50px;
+    }
+
+    input {
+        width: 100px;
+    }
 
 </style>
 <script>
+
+    const inputs = document.querySelectorAll('.controls input');
+    // we're fine with keeping this a NodeList for now.
+
+    function handleUpdate() {
+      // console.log(this.value);
+      // the first thing we need to know is the suffix of the value we
+      // want for the variables. Notice the data- attributes on spacing
+      // and blur.
+
+      console.log(this.dataset);
+      // object that'll contain all the data- attributes from the element.
+
+      const suffix = this.dataset.sizing || ''; // otherwise you'll get undefined
+      console.log(suffix);
+
+      // now: update the variable! we'll select the entire document (:root) and then
+      // set a *property* of blur, spacing, or base
+      console.log(this.name);
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+
+      // you can also scope a variable to a particular element
+      // i.e. adding a --base definition to the H1--the color around the photo
+      // will change, but not "javascript"
+      // <h1 style="--base: purple;">…
+    }
+
+    inputs.forEach(input => input.addEventListener('change', handleUpdate));
+    inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
 
 </script>
 </body>
