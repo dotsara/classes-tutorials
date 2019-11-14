@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<style>
+
+</style>
+<script>
+    // copied over the guts from the starter files.
+
+    // Get your shorts on - this is an array workout!
+    // ## Array Cardio Day 1
+
+    // Some data we can work with
+
+    const inventors = [
+      { first: 'Albert', last: 'Einstein', year: 1879, passed: 1955 },
+      { first: 'Isaac', last: 'Newton', year: 1643, passed: 1727 },
+      { first: 'Galileo', last: 'Galilei', year: 1564, passed: 1642 },
+      { first: 'Marie', last: 'Curie', year: 1867, passed: 1934 },
+      { first: 'Johannes', last: 'Kepler', year: 1571, passed: 1630 },
+      { first: 'Nicolaus', last: 'Copernicus', year: 1473, passed: 1543 },
+      { first: 'Max', last: 'Planck', year: 1858, passed: 1947 },
+      { first: 'Katherine', last: 'Blodgett', year: 1898, passed: 1979 },
+      { first: 'Ada', last: 'Lovelace', year: 1815, passed: 1852 },
+      { first: 'Sarah E.', last: 'Goode', year: 1855, passed: 1905 },
+      { first: 'Lise', last: 'Meitner', year: 1878, passed: 1968 },
+      { first: 'Hanna', last: 'Hammarström', year: 1829, passed: 1909 }
+    ];
+
+    // Pulled the initial first name (ick) and added some astronomers
+    const people = ['Bartlett, Katharine', 'Bate, Dorothea', 'Bayliss, Alex', 'Bennett, Crystal', 'Becker, Carl', 'Beckett, Samuel', 'Beddoes, Mick', 'Beecher, Henry', 'Beethoven, Ludwig', 'Begin, Menachem', 'Belloc, Hilaire', 'Bellow, Saul', 'Benchley, Robert', 'Benenson, Peter', 'Ben-Gurion, David', 'Benjamin, Walter', 'Benn, Tony', 'Bennington, Chester', 'Benson, Leana', 'Bent, Silas', 'Bentsen, Lloyd', 'Berger, Ric', 'Bergman, Ingmar', 'Berio, Luciano', 'Berle, Milton', 'Berlin, Irving', 'Berne, Eric', 'Bernhard, Sandra', 'Berra, Yogi', 'Berry, Halle', 'Berry, Wendell', 'Bethea, Erin', 'Bevan, Aneurin', 'Bevel, Ken', 'Biden, Joseph', 'Bierce, Ambrose', 'Biko, Steve', 'Billings, Josh', 'Biondo, Frank', 'Birrell, Augustine', 'Black, Elk', 'Blair, Robert', 'Blair, Tony', 'Blake, William'];
+
+    // taking a swipe at (most of) these before watching the video.
+
+    // Array.prototype.filter()
+    // 1. Filter the list of inventors for those who were born in the 1500's
+    console.info(`#### Exercise 1: Filter the list of inventors for those who were born in the 1500s ####`);
+
+    // first pass:
+    console.log(`Inventors born in the 1500s: `, inventors.filter(inventor => inventor.year > 1500 && inventor.year < 1599));
+    // it works; improvements: show the names and life years, i.e.
+    // Galilei Galileo, 1564-1642
+
+    // video
+
+    // const fifteen = inventors.filter(function(inventor) {
+    //   if(inventor.year >= 1500 && inventor.year < 1600) {
+    //     return true; // keep it!
+    //     // you don't really need an else / false here.
+    //   }
+    // }); // obvs this is clunky and can be made into an arrow function.
+
+    const fifteen = inventors.filter(inventor => inventor.year >= 1500 && inventor.year < 1600);
+    console.table(fifteen); // I forgot about console.table!
+
+    // Array.prototype.map()
+    // 2. Give us an array of the inventors' first and last names
+    console.info(`#### Exercise 2: Give us an array of the inventors' first and last names ####`);
+
+    // first pass:
+    console.log(`Inventors (first & last names): `, inventors.map(inventor => `${inventor.first} ${inventor.last}`));
+
+    // video.
+    // map takes in an array, does something with it, returns a *new* array of the same length.
+    // vs. the way you could take in 10 items and return 2 with .filter()
+
+    // const fullNames = inventors.map(inventor => inventor.first + inventor.last);
+    // with this you get the names jammed together, so you can either concatenate in a space + ' ' +
+    // or go with template literals (which I like better).
+
+    const fullNames = inventors.map(inventor => `${inventor.first} ${inventor.last}`);
+    console.log(fullNames);
+
+    // Array.prototype.sort()
+    // 3. Sort the inventors by birthdate, oldest to youngest
+    console.info(`#### Exercise 3: Sort the inventors by birth date, oldest to youngest ####`);
+
+    // first pass:
+    console.log(`Inventors sorted by birth date: `, inventors.sort(function (a,b) { return a.year - b.year;}));
+    // Lifted the example shown @ MDN w/ the inline function
+    // improvement opportunities: show first & last name with birth date
+    // Copernicus Nicolaus, 1473
+
+    // video.
+    // the way that sort works is you take two items and compare them
+    // and whether one is smaller or larger will bubble them around
+    // in the resulting sort.
+
+    // const ordered = inventors.sort(function(a,b) {
+    //   if (a.year > b.year) {
+    //     return 1;
+    //   } else {
+    //     return -1;
+    //   }
+    // });
+
+    // again, the above is kind of a lot, so let's try an arrow function…
+
+    const ordered = inventors.sort((a,b) => a.year > b.year ? 1 : -1);
+    console.table(ordered);
+
+    // Array.prototype.reduce()
+    // 4. How many years did all the inventors live?
+    console.info(`#### Exercise 4: How many years did all the inventors live? (cumulatively) ####`);
+
+    // Ohh, .reduce() is another one that I've never quite gotten my
+    // arms all the way around. Let's see how this goes.
+    //
+    // From the MDN docs: The reduce() method executes a reducer function
+    // (that you provide) on each element of the array, resulting in a single output value.
+    //
+    // So, you can make a reducer function to use _in_ the reduce method.
+    // Not actually sure how to get started on this one. I think I'll start the video.
+
+    // video
+    // Reduce allows you to build something on every item. Shows example of an old for loop
+
+    // it'll give you a running total by adding to what you returned last time
+    // since when we start we don't _have_ a total (and get an object Object error in the console,
+    // we'll add `, 0` after the function to start at, well, 0.
+
+    const totalYears = inventors.reduce((total, inventor) => {
+      return total + (inventor.passed - inventor.year);
+    }, 0);
+
+    console.log(totalYears);
+    // Wes gets 523, but I get 861. Where did I misstep… Ha! I didn't. The latest
+    // start files have additional inventors added (more women!), so the result has
+    // to be different. (:
+
+    // 5. Sort the inventors by years lived
+    console.info(`#### Exercise 5: Sort the inventors by years lived ####`);
+
+    // first pass
+    // okay, so I want to know how long each one lived, then sort by that #
+    // Reduce and sort…?
+
+    // or…just .map() Ha!
+    const yearsLived = inventors.map(inventor => (inventor.passed - inventor.year));
+    console.log(yearsLived);
+
+    // this is the kind of task I have a tendency to overcomplicate at first.
+    // i.e. I'm thinking… ohh, how to go through `inventors` and calculate
+    // each lifespan and add the name and lifespan to a new object,
+    // then sort that object.
+    //
+    // Which isn't necessarily wrong but it's something I'd like to
+    // practice not doing. Remember to see the forest first, etc.
+
+    // video
+    const oldest = inventors.sort(function(a,b) {
+      const lastPerson = a.passed - a.year;
+      const nextPerson = b.passed - b.year;
+      return lastPerson > nextPerson ? -1 : 1;
+    });
+
+    console.table(oldest);
+
+    // hahah, yep, way overcomplica--well, maybe not overcomplicated, but I was way down
+    // the garden path of optimizing / cleaning up instead.
+
+    // I still want to do my idea, though. I'll come back around.
+
+
+    // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
+    // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+    console.info(`#### Exercise 6: Create a list of Boulevards in Paris that contain 'de' (wikipedia link in source) ####`);
+
+    // ⚠️ lines 182, 192, 199-202 are where the work is
+    // commented out b/c the content isn't in this file and the browser, obviously,
+    // stops on category.
+
+    // video.
+    // first, we need the DOM elements, doing that in the browser console
+
+    // the container that holds all of the boulevard names
+    // const category = document.querySelector(`.mw-category`);
+    // //const links = category.querySelectorAll('a');
+    //
+    // // this gives you all the links on the page, so we'll convert the list of links to
+    // // names, then filter just the ones we want.
+    //
+    // //const de = links.map(link => link.textContent);
+    // // paused the video and worked a head…
+    // // ^^ that doesn't work because links is a NodeList, not an array, so:
+    //
+    // const links = Array.from(category.querySelectorAll('a'));
+    // // don't forget the spread operator!
+    // // const links = [...category.querySelectorAll('a')];
+    // // const de = links.map(link => link.textContent); // all the street names
+    // // console.log(de.filter(name => name.indexOf("de") > -1));
+    // // that's a wee clunky.
+    //
+    // const de = links
+    //   .map(link => link.textContent)
+    //   .filter(street => street.includes("de"));
+    // console.log(de);
+
+    // nice.
+    console.info(`👀 See source for the commands to get all the boulevards in Paris with 'de' in them`);
+
+    // 7. sort Exercise
+    // Sort the people alphabetically by last name
+    console.info(`#### Exercise 7: sort 'people' alphabetically by last name ####`);
+
+    // first pass.
+    // haha, my first pass in the browser console was backwards: a > b so I
+    // got a reverse alpha sort.
+
+    const alphabetized = people.sort((a,b) => a < b ? -1 : 1);
+    console.log(alphabetized);
+
+    // video
+
+    const alpha = people.sort((lastOne, nextOne) => {
+      // const parts = lastOne.split(', ');
+      // console.log(parts);
+      // which gives us an array, that we'd then have to weed through,
+      // so instead, we'll destructure to get the thing we want (last name)
+      // and use that for the sorting.
+
+      const [aLast, aFirst] = lastOne.split(', ');
+      const [bLast, bFirst] = nextOne.split(', ');
+      //console.log(aLast,aFirst);
+      return aLast > bLast ? 1 : -1;
+      // because we want this in ascending order, the returns are swapped
+      // whereas in my version I flipped the comparison symbol.
+    });
+
+    console.log(alpha);
+
+    // 8. Reduce Exercise
+    // Sum up the instances of each of these
+    console.info(`#### Exercise 8: Reduce exercise, sum up instances of words in 'data' array ####`);
+
+    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
+    // video.
+
+    const transportation = data.reduce(function(obj, item) {
+        // console.log(item);
+        // return obj;
+
+        // if we had keys in the empty object, we could just do this
+        // but we need to check
+        //obj[item]++;
+
+      if(!obj[item]) {
+        obj[item] = 0; // set initial to 0
+      }
+      obj[item]++
+      return obj;
+    }, {}); // gotta start with a blank object.
+
+    console.table(transportation);
+</script>
+</body>
+</html>
