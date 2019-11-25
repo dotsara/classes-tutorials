@@ -1,0 +1,159 @@
+<!--
+    Based on this tweet / challenge:
+    https://twitter.com/RichardWestenra/status/1197519600218456065
+
+    The only part I haven't completed (yet?) is the custom radio button
+    selection icons.
+
+    I added a bit of accessibility business not specifically called for,
+    but that I think is good to have.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple contact / sign-up form</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+        body {
+            font-family: 'Open Sans', sans-serif  ;
+            font-size: 16px;
+            line-height: 1.5;
+            padding: 2em;
+        }
+
+        a {
+            color: #ea0b8c;
+        }
+
+        main { width: 45%; }
+
+        form {
+            border: 1px solid #000000;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        form p { margin-bottom: 1em; }
+
+        input,
+        textarea {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1em;
+        }
+
+        label {
+            display: block;
+            padding: .5em .5em .5em 0;
+        }
+
+        label:hover { cursor: pointer; }
+
+        button {
+            background: #ea0b8c;
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 1em;
+            font-weight: bold;
+            padding: 1em;
+        }
+
+        button:hover {
+            background: #d20a7d;
+            cursor: pointer;
+        }
+
+        fieldset {
+            border-radius: 10px;
+            padding: 0;
+        }
+
+        fieldset p { margin: 0 0 0 .5em; }
+
+        textarea {
+            height: 10em;
+            width: 25em;
+        }
+
+        /* adjacent sibling selectors so I don't need a class */
+        input[type="checkbox"] + label,
+        input[type="radio"] + label {
+            display: inline-block;
+        }
+
+        /* using built-in validation */
+        input:required,
+        textarea:required {
+            background: lightgray;
+        }
+
+        input:invalid,
+        textarea:invalid {
+            border: 1px solid #000000;
+        }
+
+        input:valid,
+        textarea:valid {
+            background: #ffffff;
+            border: 1px solid #0bea69;
+        }
+
+        .required { color: #ff0000; }
+    </style>
+
+</head>
+<body>
+
+<main>
+    <form method="post" action="https://jsonplaceholder.typicode.com/posts">
+        <p>
+            <label for="signup_name">Name <span class="required">*</span></label>
+            <input type="text" id="signup_name" name="name" placeholder="name" aria-describedby="required-info" required />
+        </p>
+        <p>
+            <label for="signup_email">Email <span class="required">*</span></label>
+            <input type="email" id="signup_email" name="email" placeholder="email address" aria-describedby="required-info" required />
+        </p>
+        <p>
+            <label for="signup_phone">Phone <span class="required">*</span></label>
+            <input type="tel" id="signup_phone" name="phone" placeholder="(323) 555-1212" aria-describedby="required-info" required />
+        </p>
+        <fieldset>
+            <legend>Your preferred contact method <span class="required">*</span></legend>
+            <p>
+                <input type="radio" name="contact-email" id="signup_preferred_email" />
+                <label for="signup_preferred_email">Email</label>
+            </p>
+            <p>
+                <input type="radio" name="contact-email" id="signup_preferred_phone" />
+                <label for="signup_preferred_phone">Phone</label>
+            </p>
+        </fieldset>
+        <p>
+            <label for="signup_message">Message <span class="required">*</span></label>
+            <textarea id="signup_message" name="message" placeholder="your message" aria-describedby="required-info" required></textarea>
+        </p>
+        <p>
+            <input type="checkbox" id="signup_newsletter" name="newsletter"/>
+            <label for="signup_newsletter">Sign me up for the mailing list</label>
+        </p>
+        <p>
+            <button type="submit">Send message</button>
+            <!--
+                basic requirement: button text, "send"
+                I prefer an explicit description / instruction where possible.
+            -->
+        </p>
+
+        <!--
+            Got the idea for this technique from:
+            https://www.accessibility-developer-guide.com/examples/forms/required/
+        -->
+        <p aria-hidden="true" id="required-info">
+            <span class="required">*</span> Required field
+        </p>
+    </form>
+</main>
+</body>
+</html>
