@@ -1,0 +1,110 @@
+<!--
+  Got the idea from this challenge posted on Twitter:
+	https://twitter.com/RichardWestenra/status/1197519600218456065
+	
+	I'm still going to do the sign-up version, but I started with a
+	relatively no-frills contact form, first. I wanted to play around
+	with some validation-related pseudo classes.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple contact form</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+        body {
+            font-family: 'Open Sans', sans-serif  ;
+            font-size: 16px;
+            line-height: 1.5;
+            padding: 2em;
+        }
+
+        a {
+            color: #ea0b8c;
+        }
+
+        main { width: 45%; }
+        form {
+            border: 1px solid #000000;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        form p { margin-bottom: 1em; }
+
+        input,
+        textarea {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1em;
+        }
+
+        label {
+            display: block;
+            padding: .5em .5em .5em 0;
+        }
+
+        button {
+            background: #ea0b8c;
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 1em;
+            font-weight: bold;
+            padding: 1em;
+        }
+
+        button:hover {
+            background: #d20a7d;
+            cursor: pointer;
+        }
+
+        button.reset {
+            background: dimgrey;
+        }
+
+				/* using built-in validation */
+        input:required,
+        textarea:required {
+            background: lightgray;
+        }
+
+        input:invalid,
+        textarea:invalid {
+            border: 1px solid #000000;
+        }
+
+        input:valid,
+        textarea:valid {
+            background: #ffffff;
+        }
+    </style>
+
+</head>
+<body>
+
+<main>
+    <form method="post" action="https://jsonplaceholder.typicode.com/posts">
+        <p>
+            <label for="signup_name">Name</label>
+            <input type="text" id="signup_name" name="name" placeholder="name" required />
+        </p>
+        <p>
+            <label for="signup_email">Email</label>
+            <input type="email" id="signup_email" name="email" placeholder="email address" required />
+        </p>
+        <p>
+            <label for="signup_message">Message</label>
+            <textarea id="signup_message" name="message" placeholder="your message" required></textarea>
+        </p>
+        <p>
+            <button type="submit">Send your message</button>
+        </p>
+
+        <p>
+            <button type="reset" class="reset">Reset the form</button>
+        </p>
+    </form>
+</main>
+</body>
+</html>
