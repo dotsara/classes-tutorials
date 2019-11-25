@@ -7,3 +7,5 @@ I can sometimes take an ice age to finish a tutorial. 🤷🏽‍♀️
 Included in this repo:
 * [Wes Bos's ES6 for Everyone](https://wesbos.com/es6-for-everyone/)
 * [Wes Bos's Javascript 30](https://javascript30.com/)
+
+📝 Also sometimes maybe challenges. (: 
