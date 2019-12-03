@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+    <p>Click me</p>
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+    body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 18px;
+    }
+    p {
+        background: #eeeeee;
+        border: 1px solid #666666;
+        color: #000000;
+        font-weight: bold;
+        padding: 1em;
+        text-align: center;
+        width: 10em;
+    }
+
+</style>
+<script>
+
+    const dogs = [{ name: 'Snickers', age: 2},
+                  { name: 'Fluffy', age: 4}];
+
+    const clickable = document.querySelector('p');
+    clickable.addEventListener('click', makeGreen);
+
+    function makeGreen() {
+        clickable.style.color = "#BADA55";
+        clickable.style.fontSize = "2em";
+    }
+
+    // Firefox's inspector doesn't jump directly to the javascript when
+    // choosing "break on" > "attribute modification" the way Chrome
+    // does. Or anyway, it's not jumping w/ my example in this file.
+    // (But Chrome does. Whomp whomp.)
+
+
+    // Regular
+    console.log(`Ahoy!`);
+
+    // Interpolated
+    console.log(`Hello, I am a %s string!`, `🍿`);
+    // whoa, this one's weird. I definitely prefer backticks.
+
+    // Styled
+    console.log('%c I am really hungry.', 'font-size: 20px; background: pink');
+
+    // I already know I'll use this when I'm debugging a loop of some kind
+    // to show me beginning / end. 🤓
+
+
+    // warning!
+    console.warn(`Oh noes!`);
+
+    // Error
+    console.error(`Alert!!`);
+
+    // Info
+    console.info(`Crocodiles eat 3-4 people per year.`);
+
+    // Testing
+    console.assert(1 === 1, `That is wrong!`); // only fires when wrong
+    // you can test for something, if it's fallse, it'll throw something
+    // into your console.
+    console.assert(clickable.classList.contains('ouch'), `That is incorrect!`);
+
+    // Clearing
+    // console.clear(); …don't use that.
+
+    // Viewing DOM elements
+    console.log(clickable);
+    //console.dir(clickable);
+    // nota bene: in Firefox, .log shows the <p> collapsed with an arrow
+    // and then .dir shows the <p> with the menu (available methods) already
+    // opened for you.
+    // Interesting… now I'm not sure how to see the tag and its contents
+    // in the firefox console (Chrome shows it by default…)
+
+
+    // Grouping together
+    // dogs.forEach((dog => {
+    //   console.log(`This is ${dog.name}`);
+    //   console.log(`${dog.name} is ${dog.age} years old.`);
+    //   console.log(`${dog.name} is ${dog.age * 7} dog years old`);
+    // }));
+    // this output is a bit much…
+
+    dogs.forEach((dog => {
+      console.group(`${dog.name}`);
+      // option! console.groupCollapsed(`${dog.name}`);
+      console.log(`This is ${dog.name}`);
+      console.log(`${dog.name} is ${dog.age} years old.`);
+      console.log(`${dog.name} is ${dog.age * 7} dog years old`);
+      console.groupEnd(`${dog.name}`);
+    }));
+
+    // counting
+    console.count(`lunch, please!`);
+    console.count(`lunch, please!`);
+    console.count(`lunch, please!`);
+    console.count(`No wait, another snack, instead!`);
+    console.count(`lunch, please!`);
+    console.count(`lunch, please!`);
+    console.count(`No wait, another snack, instead!`);
+    console.count(`No wait, another snack, instead!`);
+    console.count(`No wait, another snack, instead!`);
+    console.count(`lunch, please!`);
+
+    //timing
+    console.time(`fetching data…`);
+    fetch(`https://api.github.com/users/dotsara`)
+        .then(data => data.json())
+        .then(data => {
+            console.timeEnd(`fetching data…`);
+            console.log(data);
+        });
+
+    // that's neat.
+
+    // oh yeah, don't forget console.table
+    console.table(dogs);
+</script>
+</body>
+</html>
