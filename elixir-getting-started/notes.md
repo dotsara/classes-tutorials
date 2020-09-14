@@ -55,3 +55,14 @@ URL: https://elixir-lang.org/getting-started/keywords-and-maps.html
 
 >  The longer the list, the longer it will take to find a key, to count the number of items, and so on. For this reason, keyword lists are used in Elixir mainly for passing optional values. If you need to store many items or guarantee one-key associates with at maximum one-value, you should use maps instead.
 
+## Modules and functions
+URL https://elixir-lang.org/getting-started/modules-and-functions.html
+
+Created (math.ex), but the end of the **Scripted mode** section recommends
+writing further example code into `exs` files (so that no bytecode file
+is created).
+
+## Recursion
+URL: https://elixir-lang.org/getting-started/recursion.html
+
+
