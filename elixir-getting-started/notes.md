@@ -29,4 +29,29 @@ out.
 
 **Reminder:** Single quotes are charlists, double quotes are strings.
 
+Ooh, the above gets a bit more explanation in "Unicode and Code Points"   
+https://elixir-lang.org/getting-started/binaries-strings-and-char-lists.html#unicode-and-code-points
+
+## Binaries, strings, and charlists
+URL: https://elixir-lang.org/getting-started/binaries-strings-and-char-lists.html
+
+Honestly, the [Bitstrings](https://elixir-lang.org/getting-started/binaries-strings-and-char-lists.html#bitstrings)
+and [Binaries](https://elixir-lang.org/getting-started/binaries-strings-and-char-lists.html#binaries) 
+sections make my head fizz a little bit. 
+
+
+I think normally I would twist myself up into a bit of a knot to
+_really_ understand it (well, to try to, at least), but instead
+of heading down that road, I'm just reading through the sections
+and moving forward on to charlists.
+
+I haven't had to fuss with bitstrings _or_ binaries, so far, and
+I think that based on where I'd like to get w/r/t my ability to 
+write any Elixir (Phoenix, LiveView) I don't need to understand
+them backwards and fowards.
+
+## Keyword lists and maps
+URL: https://elixir-lang.org/getting-started/keywords-and-maps.html
+
+>  The longer the list, the longer it will take to find a key, to count the number of items, and so on. For this reason, keyword lists are used in Elixir mainly for passing optional values. If you need to store many items or guarantee one-key associates with at maximum one-value, you should use maps instead.
 
