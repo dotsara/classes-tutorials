@@ -1,6 +1,10 @@
 # Elixir introduction
 URL: https://elixir-lang.org/getting-started/introduction.html
 
+## Notes
+
+Skipping sections 11, 15, 22, and 23 on the advice of Billy.
+
 ## Basic types
 
 ### Anonymous functions
@@ -65,4 +69,39 @@ is created).
 ## Recursion
 URL: https://elixir-lang.org/getting-started/recursion.html
 
+### Reduce and map algorithms
+URL: https://elixir-lang.org/getting-started/recursion.html#reduce-and-map-algorithms
+
+Okay, so the `sum_list` example: I get that. Took me a hot a second, but
+I do get it. The `double_each` one, though... I mean, I guess I can _see_
+what it's doing, but it makes way less sense to my brain than the
+`Enum.map` version below it. 
+
+```
+iex> Enum.map([1, 2, 3], fn(x) -> x * 2 end)
+[2, 4, 6]
+```
+
+Way more sensible. Oh and I'm starting to grok the capture syntax a bit
+better. There was an example a section or two ago that really helped it
+click and this restatement of the map with it is also useful:
+
+```
+iex> Enum.map([1, 2, 3], &(&1 * 2))
+[2, 4, 6]
+```
+
+Where the `&1` is the first argument, the thing you're doing something to / with.
+
+## Enumerables and Streams
+URL: https://elixir-lang.org/getting-started/enumerables-and-streams.html
+
+Hmm. The explanation of the difference between eager and lazy operations
+isn't... great? Or anyway I don't _really_ understand the examples given.
+That's a little frustrating, but instead of trying to force my brain to 
+grok it, I'm going to take this advice:
+
+> ...focus on the Enum module first and only move to Stream for the particular scenarios where laziness is required, to either deal with slow resources or large, possibly infinite, collections.
+
+and move on!
 
