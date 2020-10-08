@@ -105,3 +105,64 @@ grok it, I'm going to take this advice:
 
 and move on!
 
+## alias, require, and import
+URL: https://elixir-lang.org/getting-started/alias-require-and-import.html
+
+All 3 are **lexically scoped** and can be used inside functions.
+
+From the `require` section:
+
+> Elixir provides macros as a mechanism for meta-programming (writing code that generates code). Macros are expanded at compile time.
+> 
+> Public functions in modules are globally available, but in order to use macros, you need to opt-in by requiring the module they are defined in.
+
+`use` is different than the other 3 above because it allows the module you're `use`-ing to inject _any_ code into the current module (this feels more like a gem with its own dependencies vs. the other 3 above where you don't _always_ know up front what you'll be getting along with the main gem that you want).
+
+This feels useful to remember (I'm thinking in terms of code forensics): 
+
+> **Note:** in Elixir, you don’t have to define the Foo module before being able to define the Foo.Bar module, as the language translates all module names to atoms. You can define arbitrarily-nested modules without defining any module in the chain (e.g., Foo.Bar.Baz without defining Foo or Foo.Bar first).
+
+That is to say: I shouldn't rely on the assumption that seeing a nested module means there will be fully-defined parent modules. 
+
+Being able to alias, require, and import multiple modules at once--the look of it, at least--reminds me of destructuring in Javascript:
+
+```elixir
+alias MyApp.{Coffee, Tea, Soda}
+```
+
+## Module attributes
+
+…started to read this, but it's unfamiliar in that I've only seen the `@moduledoc` and `@doc` attributes (which I should use more often!), so I'm not spending much time here. 
+
+## Structs
+URL: https://elixir-lang.org/getting-started/structs.html
+
+> Structs take the name of the module they're defined in. 
+
+Ahh, so: `%Coffee{}`, struct; `%{}`, map. Strictly-speaking. 
+
+But also: structs are _bare_ maps underneath but with a special field whose value is the name of the struct. 
+
+```
+iex> is_map(john)
+true
+iex> john.__struct__
+User
+```
+
+The bare is important here because "none of the protocols implemented for maps are available for structs. For example, you can neither enumerate nor access a struct… However, since structs are just maps, they work with the functions from the Map module"
+
+## Comprehensions
+URL: https://elixir-lang.org/getting-started/comprehensions.html
+
+> In the examples above, all the comprehensions returned lists as their result. However, the result of a comprehension can be inserted into different data structures by passing the `:into` option to the comprehension.
+
+```
+iex(1)> stream = IO.stream(:stdio, :line)
+%IO.Stream{device: :standard_io, line_or_bytes: :line, raw: false}
+iex(2)> for line <- stream, into: stream do
+...(2)>   String.upcase(line) <> "\n"
+...(2)> end
+To be or not to be: that is the question!
+TO BE OR NOT TO BE: THAT IS THE QUESTION!
+```
